@@ -80,4 +80,25 @@ mod tests {
 
         Some(s)
     }
+
+    #[test]
+    fn t3() {
+        assert_eq!(min_max_sum(vec![1,2,3,4,5]), (14, 10));
+    }
+
+    fn min_max_sum(a: Vec<u8>) -> (u8, u8) {
+        let mut min = a[0];
+        let mut max = a[0];
+        let mut sum = 0;
+        for i in a {
+            if i > max {
+                max = i;
+            }
+            if i < min {
+                min = i;
+            }
+            sum += i;
+        }
+        (sum - min, sum - max)
+    }
 }
