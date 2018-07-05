@@ -12,7 +12,7 @@ mod tests {
 
     #[test]
     fn test_list_node() {
-        let a = mini::List_node {val: 1, next:None};
+        let a = mini::list_node {val: 1, next:None};
         assert_eq!(a.val, 1);
     }
 }

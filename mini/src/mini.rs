@@ -1,10 +1,10 @@
-pub struct List_node<T> {
+pub struct list_node<T> {
     pub val: T,
-    pub next: Option<Box<List_node<T>>>,
+    pub next: Option<Box<list_node<T>>>,
 }
 
 struct Linked_list<T> {
-    head: List_node<T>
+    head: list_node<T>
 }
 
 pub fn work() {
