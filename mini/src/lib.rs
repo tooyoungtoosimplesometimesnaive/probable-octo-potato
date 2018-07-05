@@ -9,5 +9,11 @@ mod tests {
         assert_eq!(2 + 2, 4);
         mini::work();
     }
+
+    #[test]
+    fn test_list_node() {
+        let a = mini::List_node {val: 1, next:None};
+        assert_eq!(a.val, 1);
+    }
 }
 
