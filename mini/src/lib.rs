@@ -12,8 +12,14 @@ mod tests {
 
     #[test]
     fn test_list_node() {
-        let a = mini::list_node {val: 1, next:None};
-        assert_eq!(a.val, 1);
+        let n1 = mini::ListNode {val: 1, next:None};
+        assert_eq!(n1.val, 1);
+
+        let mut l = mini::LinkedList {head: None, size: 0};
+        let n2 = mini::ListNode {val: 2, next: None};
+        l.add(n2);
+
+        assert_eq!(l.size, 1);
     }
 }
 
