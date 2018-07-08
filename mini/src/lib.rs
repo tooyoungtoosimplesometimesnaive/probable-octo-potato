@@ -2,24 +2,28 @@ mod mini;
 
 #[cfg(test)]
 mod tests {
-    use mini;
+    use mini::Node;
 
     #[test]
     fn it_works() {
         assert_eq!(2 + 2, 4);
-        mini::work();
     }
 
     #[test]
     fn test_list_node() {
-        let n1 = mini::ListNode {val: 1, next:None};
-        assert_eq!(n1.val, 1);
-
-        let mut l = mini::LinkedList {head: None, size: 0};
-        let n2 = mini::ListNode {val: 2, next: None};
-        l.add(n2);
-
-        assert_eq!(l.size, 1);
+        let mut x = Node { val: "m", l: None, r: None };
+        x.insert("z");
+        x.insert("b");
+        x.insert("c");
+        assert!(x == Node {
+            val: "m",
+            l: Some(Box::new(Node {
+                val: "b",
+                l: None,
+                r: Some(Box::new(Node { val: "c", l: None, r: None })),
+            })),
+            r: Some(Box::new(Node { val: "z", l: None, r: None })),
+        });
     }
 }
 

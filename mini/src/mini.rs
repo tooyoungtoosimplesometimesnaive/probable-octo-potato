@@ -1,37 +1,24 @@
-#[derive(Copy, Clone)]
-pub struct ListNode<T> {
-    pub val: T,
-    pub next: Option<Box<ListNode<T>>>,
+#[derive(PartialEq)]
+pub struct Node<'a> {
+    pub val: &'a str,
+    pub l: Option<Box<Node<'a>>>,
+    pub r: Option<Box<Node<'a>>>,
 }
 
-pub struct LinkedList<T> {
-    pub head: Option<ListNode<T>>,
-    pub size: u8
-}
-
-impl<T> LinkedList<T> {
-    pub fn add(&mut self, node: ListNode<T>) {
-        self.size += 1;
-        if self.head.is_none() {
-            self.head = Some(node);
-        } else {
-
-            let mut n = self.head.unwrap();
-            loop {
-                match n.next {
-                    Some(n_next) => {
-                        n = *n_next;
-                        break;
-                    },
-                    None => {
-                        n.next = Some(Box::new(node));
-                    }
-                }
+impl<'a> Node<'a> {
+    pub fn insert(&mut self, new_val: &'a str) {
+        if self.val == new_val {
+            return
+        }
+        let target_node = if new_val < self.val { &mut self.l } else { &mut self.r };
+        match target_node {
+            &mut Some(ref mut subnode) => subnode.insert(new_val),
+            &mut None => {
+                let new_node = Node { val: new_val, l: None, r: None };
+                let boxed_node = Some(Box::new(new_node));
+                *target_node = boxed_node;
             }
         }
     }
 }
 
-pub fn work() {
-    println!("it works");
-}
