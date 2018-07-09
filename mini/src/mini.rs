@@ -22,3 +22,14 @@ impl<'a> Node<'a> {
     }
 }
 
+pub enum List {
+    Cons(i32, Box<List>),
+    Nil,
+}
+
+pub fn len(l: &List) -> u8 {
+    match l {
+        List::Cons(_, tl) => len(&*tl) + 1,
+        List::Nil => 0,
+    }
+}
