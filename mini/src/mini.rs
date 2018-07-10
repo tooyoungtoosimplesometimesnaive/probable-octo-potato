@@ -33,3 +33,9 @@ pub fn len(l: &List) -> u8 {
         List::Nil => 0,
     }
 }
+
+pub enum TreeNode {
+    Cons(Box<TreeNode>, i32, Box<TreeNode>),
+    Nil,
+}
+
