@@ -39,3 +39,19 @@ pub enum TreeNode {
     Nil,
 }
 
+pub fn total_node(root: &TreeNode) -> u8 {
+    match root {
+        TreeNode::Cons(left, _, right) => 1 +  total_node(&*left) + total_node(&*right),
+        TreeNode::Nil => 0,
+    }
+}
+
+pub fn depth(root: &TreeNode) -> u8 {
+    use std::cmp;
+
+    match root {
+        TreeNode::Cons(left, _, right) => 1 + cmp::max(depth(&*left), depth(&*right)),
+        TreeNode::Nil => 0,
+    }
+}
+
