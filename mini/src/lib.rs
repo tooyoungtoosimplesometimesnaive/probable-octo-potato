@@ -36,6 +36,22 @@ mod tests {
     }
 
     #[test]
+    fn test_list2() {
+        use mini::len2;
+        use mini::List2::Cons;
+        use mini::List2::Nil;
+        use std::rc::Rc;
+
+        let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
+        let b = Cons(3, Rc::clone(&a));
+        let c = Cons(4, Rc::clone(&a));
+
+        assert_eq!(len2(&*a), 2);
+        assert_eq!(len2(&b), 3);
+        assert_eq!(len2(&c), 3);
+    }
+
+    #[test]
     fn test_tree_node() {
         use mini::total_node;
         use mini::depth;

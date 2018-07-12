@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 #[derive(PartialEq)]
 pub struct Node<'a> {
     pub val: &'a str,
@@ -31,6 +33,18 @@ pub fn len(l: &List) -> u8 {
     match l {
         List::Cons(_, tl) => len(&*tl) + 1,
         List::Nil => 0,
+    }
+}
+
+pub enum List2 {
+    Cons(i32, Rc<List2>),
+    Nil,
+}
+
+pub fn len2(l: &List2) -> u8 {
+    match l {
+        List2::Cons(_, tl) => len2(&*tl) + 1,
+        List2::Nil => 0,
     }
 }
 
