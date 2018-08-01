@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
     use std::mem;
+    use std::collections::HashSet;
     #[test]
     fn it_works() {
         assert_eq!(2 + 2, 4);
@@ -100,5 +101,35 @@ mod tests {
             sum += i;
         }
         (sum - min, sum - max)
+    }
+
+    /// 1-9 to construct 3 numbers, 
+    /// abc, def, ghi
+    /// And satisfy abc : def : ghi = 1 : 2 : 3
+    #[test]
+    fn t4() {
+        let mut m: HashSet<i32> = HashSet::new();
+        f(9, &mut m, 0);
+    }
+
+    fn check_ratio(x: i32, y: i32, z: i32) {
+        // println!("{}, {}, {}", x, y, z);
+        if x * 2 == y && x * 3 == z {
+            println!("Got {}, {}, {}", x, y, z);
+        }
+    }
+
+    fn f(i: i32, m: &mut HashSet<i32>, r: i32) {
+        if i == 0 {
+            check_ratio(r / 1000000, r / 1000 % 1000, r % 1000);
+        } else {
+            for j in 1..10 {
+                if !m.contains(&j) {
+                    m.insert(j);
+                    f(i - 1, m, r * 10 + j);
+                    m.remove(&j);
+                }
+            }
+        }
     }
 }
