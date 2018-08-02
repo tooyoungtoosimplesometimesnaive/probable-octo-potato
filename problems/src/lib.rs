@@ -110,6 +110,7 @@ mod tests {
     fn t4() {
         let mut m: HashSet<i32> = HashSet::new();
         f(9, &mut m, 0);
+        f2(9, 1, 0);
     }
 
     fn check_ratio(x: i32, y: i32, z: i32) {
@@ -128,6 +129,18 @@ mod tests {
                     m.insert(j);
                     f(i - 1, m, r * 10 + j);
                     m.remove(&j);
+                }
+            }
+        }
+    }
+    // Another version
+    fn f2(i: i32, m: i32, r: i32) {
+        if i == 0 {
+            check_ratio(r / 1000000, r / 1000 % 1000, r % 1000);
+        } else {
+            for j in 1..10 {
+                if (1 << j) & m == 0 {
+                    f2(i - 1, m | (1 << j), r * 10 + j);
                 }
             }
         }
