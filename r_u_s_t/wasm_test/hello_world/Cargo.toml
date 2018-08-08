@@ -1,0 +1,11 @@
+[package]
+name = "hello_world"
+version = "0.1.0"
+authors = ["Xing <xingmarc@yeah.net>"]
+
+[dependencies]
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
