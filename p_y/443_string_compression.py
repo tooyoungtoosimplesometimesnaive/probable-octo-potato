@@ -6,33 +6,23 @@ class Solution(object):
         """
         if len(chars) == 0 or len(chars) == 1:
             return len(chars)
+
         i, j = 0, 0
-        count = 0
         while j < len(chars):
-            if chars[i] != chars[j] or j == len(chars) - 1:
-                #print(count)
-                count = count if j != len(chars) - 1 else count + 1
-                if count == 1:
-                    i += 1
-                    count = 0
-                    chars[i] = chars[j]
-                    continue
-                k = 0
-                count_str = str(count)
-                while k < len(count_str):
-                    i += 1
-                    print("i = {}. k = {}".format(i, k))
-                    chars[i] = count_str[k]
-                    k += 1
-                i += 1
-                if j == len(chars) - 1:
-                    break
-                chars[i] = chars[j]
-                count = 0
-                
-            else:
+            current_char = chars[j]
+            count = 0
+            while j < len(chars) and current_char == chars[j]:
                 j += 1
                 count += 1
-
             
+            print("i={}, j={}, current_char={}".format(i, j, current_char))
+                
+            chars[i] = current_char
+            i += 1
+            if count != 1:
+                k = 0
+                while k < len(str(count)):
+                    chars[i] = str(count)[k]
+                    i += 1
+                    k += 1
         return i
