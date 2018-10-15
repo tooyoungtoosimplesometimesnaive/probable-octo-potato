@@ -83,3 +83,47 @@ class Solution:
             results.append(r)
         return results
         
+    
+"""
+Other solution
+"""
+class Solution:
+    def accountsMerge(self, accounts):
+        """
+        :type accounts: List[List[str]]
+        :rtype: List[List[str]]
+        """
+        """
+        [
+        ["John", "johnsmith@mail.com", "john00@mail.com"],
+        ["John", "johnnybravo@mail.com"],
+        ["John", "johnsmith@mail.com", "john_newyork@mail.com"],
+        ["Mary", "mary@mail.com"]
+        ]
+        """
+        email_name = dict()
+        graph = collections.defaultdict(set)
+        for account in accounts:
+            name = account[0]
+            for email in account[1:]:
+                graph[email].add(account[1])
+                graph[account[1]].add(email)
+                email_name[email] = name
+
+        seen = set()
+        ans = []
+        for email in graph:
+            if email not in seen:
+                seen.add(email)
+                stack = [email]
+                component = []
+                while stack:
+                    node = stack.pop()
+                    component.append(node)
+                    for neighbor in graph[node]:
+                        if neighbor not in seen:
+                            seen.add(neighbor)
+                            stack.append(neighbor)
+                ans.append([email_name[email]] + sorted(component))
+        return ans
+
