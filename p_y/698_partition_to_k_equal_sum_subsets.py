@@ -31,3 +31,31 @@ class Solution:
             
         return False
         
+### Exactly same take 2:
+class Solution:
+    def canPartitionKSubsets(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        nums_sum = sum(nums)
+        if k <= 0 or nums_sum % k != 0:
+            return False
+        visited = [False for i in range(len(nums))]
+
+        return self.can_partition(nums, k, 0, 0, nums_sum // k, visited)
+
+    def can_partition(self, nums, k, start_index, current_sum, target, visited):
+        if k == 0:
+            return True
+        if current_sum == target:
+            return self.can_partition(nums, k - 1, 0, 0, target, visited)
+
+        for i in range(start_index, len(nums)):
+            if not visited[i]:
+                visited[i] = True
+                if self.can_partition(nums, k, i, current_sum + nums[i], target, visited):
+                    return True
+                visited[i] = False
+        return False
