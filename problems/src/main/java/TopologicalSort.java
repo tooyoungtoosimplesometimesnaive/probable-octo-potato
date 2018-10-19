@@ -10,10 +10,10 @@ public class TopologicalSort<T extends Comparable> {
 
     public List<List<T>> sort() {
         int numOfVertices = graph.adjacencyList.size();
-        List<T> initialZeroIndegrees = graph.indegree.keySet()
+        List<T> initialZeroInDegrees = graph.indegree.keySet()
                 .stream().filter(k -> graph.indegree.get(k) == 0).collect(Collectors.toList());
         List<List<T>> result = new ArrayList<>();
-        for (T start : initialZeroIndegrees) {
+        for (T start : initialZeroInDegrees) {
             List<T> list = new ArrayList<>();
             list.add(start);
             sort(start, numOfVertices, list, result);
@@ -32,11 +32,11 @@ public class TopologicalSort<T extends Comparable> {
             graph.indegree.put(i, graph.indegree.get(i) - 1);
         }
 
-        List<T> zeroIndegrees = graph.indegree.keySet()
+        List<T> zeroInDegrees = graph.indegree.keySet()
                 .stream().filter(k -> graph.indegree.get(k) == 0)
                 .collect(Collectors.toList());
 
-        for (T next : zeroIndegrees) {
+        for (T next : zeroInDegrees) {
             if (!current.contains(next)) {
                 current.add(next);
                 sort(next, numOfVertices, current,result);
