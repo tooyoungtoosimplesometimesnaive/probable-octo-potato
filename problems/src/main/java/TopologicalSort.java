@@ -8,6 +8,10 @@ public class TopologicalSort<T extends Comparable> {
         this.graph = graph;
     }
 
+    /**
+     * Get all the topological sort of the graph
+     * @return a list of list of node
+     */
     public List<List<T>> sort() {
         int numOfVertices = graph.adjacencyList.size();
         List<T> initialZeroInDegrees = graph.indegree.keySet()

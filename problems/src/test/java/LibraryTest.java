@@ -3,7 +3,6 @@
  */
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class LibraryTest {
 
@@ -24,5 +23,17 @@ public class LibraryTest {
                 .sort().toString(),
                 "[[1, 2, 3, 4, 5], [1, 2, 3, 5, 4], [1, 2, 5, 3, 4], [1, 5, 2, 3, 4], [5, 1, 2, 3, 4]]"
         );
+    }
+
+    @Test
+    public void testToggleLightBulbs() {
+        ToggleLightBulbs tlb = new ToggleLightBulbs(4);
+        tlb.solve();
+    }
+
+    @Test
+    public void f() {
+        System.out.println(1 << 2);
+        System.out.println(1 << 0);
     }
 }
