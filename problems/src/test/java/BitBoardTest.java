@@ -32,6 +32,9 @@ public class BitBoardTest {
     @Test
     public void test1() {
         BitBoard board1 = BitBoard.allOnes(5, 5);
+        Assert.assertTrue(board1.isAllOnes());
+        Assert.assertFalse(board1.isAllZeros());
+
         board1.set(2, 3, 0);
         Assert.assertEquals(board1.toString(),
             "11111\n"
@@ -60,6 +63,8 @@ public class BitBoardTest {
                 + "11100\n"
                 + "11111\n"
                 + "01111\n");
+        Assert.assertFalse(board1.isAllOnes());
+        Assert.assertFalse(board1.isAllZeros());
     }
 
     @Test

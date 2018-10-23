@@ -48,6 +48,24 @@ public class BitBoard {
         return (rowNum & (1 << j)) == 0 ? 0 : 1;
     }
 
+    public boolean isAllOnes() {
+        for (int i = 0; i < row; i++) {
+            if ((board[i] & Integer.MAX_VALUE) != board[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isAllZeros() {
+        for (int i = 0; i < row; i++) {
+            if ((board[i] ^ 0) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void setRowNumber(int i, int rowNumber) {
         board[i] = rowNumber;
     }
