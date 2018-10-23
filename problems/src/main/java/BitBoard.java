@@ -13,7 +13,7 @@ public class BitBoard {
     }
 
     static BitBoard allOnes(int row, int col) {
-        int rowNum = (1 << (col + 1)) - 1;
+        int rowNum = (1 << col) - 1;
         BitBoard b = new BitBoard(row, col);
         for (int i = 0; i < row; i++) {
             b.setRowNumber(i, rowNum);
@@ -25,21 +25,22 @@ public class BitBoard {
         return new BitBoard(row, col);
     }
 
-    // Some problems here
     public void set(int i, int j, int value) {
         if (value != 0 && value != 1) {
             throw new IllegalArgumentException("Value should be either 0 or 1");
         }
-        int n = get(i, j);
-        if (n == value) {
-            return;
-        } else {
-            // 0 ^ 1 -> 1
-            // 1 ^ 1 -> 0
-            int rowNum = board[i];
-            int remaining = rowNum & ((1 << j + 1) - 1);
-            board[i] = ((rowNum - remaining) ^ 1) + remaining;
-        }
+        checkIndexRange(i, j);
+
+        j = col - 1 - j;
+        int rowNum = board[i];
+        int leading = rowNum & (~((1 << (j + 1)) - 1));
+        // j ones
+        // xxxxx
+        // x1000
+        // x0111
+        int remaining = rowNum & ((1 << j) - 1);
+        value = value << j;
+        board[i] = leading + value + remaining;
     }
 
     public int get(int i, int j) {
@@ -50,12 +51,24 @@ public class BitBoard {
     public void setRowNumber(int i, int rowNumber) {
         board[i] = rowNumber;
     }
-    public void printBoard() {
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                System.out.print(get(i, j) + " ");
+            for (int j = col - 1; j >= 0; j--) {
+                sb.append(get(i, j));
             }
-            System.out.println();
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
+
+    private void checkIndexRange(int i, int j) {
+        if (i < 0 || i >= row) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (j < 0 || j >= col) {
+            throw new IndexOutOfBoundsException();
         }
     }
 }
