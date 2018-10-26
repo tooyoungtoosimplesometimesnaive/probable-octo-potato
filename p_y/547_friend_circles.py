@@ -50,3 +50,27 @@ class Solution:
                 #print("{} {}".format(i, j))
         
         return uf.count
+
+# Take 2: DFS:
+class Solution:
+    def findCircleNum(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: int
+        """
+        n = len(M)
+        visited = [False for _ in range(n)]
+        number = 0
+        for i in range(n):
+            if not visited[i]:
+                number += 1
+                #visited[i] = True
+                self.dfs(M, i, visited)
+
+        return number
+
+    def dfs(self, M, i, visited):
+        for j in range(len(M)):
+            if M[i][j] == 1 and not visited[j]:
+                visited[j] = True
+                self.dfs(M, j, visited)

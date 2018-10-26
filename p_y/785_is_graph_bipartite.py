@@ -31,3 +31,29 @@ class Solution:
         
         return True
 
+# DFS method:
+class Solution:
+    def isBipartite(self, graph):
+        """
+        :type graph: List[List[int]]
+        :rtype: bool
+        """
+
+        state = [-1 for _ in range(len(graph))]
+
+        for i in range(len(graph)):
+            if state[i] == -1 and not self.valid_color(graph, state, i, 0):
+                return False
+        return True
+
+    def valid_color(self, graph, state, node, color):
+        if state[node] != -1:
+            return state[node] == color % 2
+        state[node] = color % 2
+
+        for n in graph[node]:
+            if not self.valid_color(graph, state, n, color + 1):
+                return False
+
+        return True
+
