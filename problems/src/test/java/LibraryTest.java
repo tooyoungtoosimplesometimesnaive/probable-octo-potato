@@ -4,10 +4,9 @@
 import common.ConnectedComponents;
 import common.DFSParadigms;
 import common.Graph;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -63,5 +62,7 @@ public class LibraryTest {
 //        DFSParadigms.allSubsets_1(Arrays.asList(1,2,3,4), new ArrayList<Integer>(), 0);
 //        DFSParadigms.allSubsets_2(Arrays.asList(1,2,3,4), new ArrayList<Integer>(), 0);
       DFSParadigms.allPermutation(Arrays.asList(1,2,3), 0);
+      System.out.println("---");
+      DFSParadigms.allPermutation_2(Arrays.asList(1,2,3), new ArrayList<>(), new HashSet<>());
     }
 }

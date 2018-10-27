@@ -1,6 +1,7 @@
 package common;
 
 import java.util.List;
+import java.util.Set;
 
 public class DFSParadigms {
 
@@ -44,5 +45,21 @@ public class DFSParadigms {
     int t = input.get(i);
     input.set(i, input.get(j));
     input.set(j, t);
+  }
+
+  public static void allPermutation_2(List<Integer> input, List<Integer> current, Set<Integer> visited) {
+    if (current.size() == input.size()) {
+      System.out.println(current);
+      return;
+    }
+    for (int i : input) {
+      if (!visited.contains(i)) {
+        visited.add(i);
+        current.add(i);
+        allPermutation_2(input, current, visited);
+        current.remove(current.size() - 1);
+        visited.remove(i);
+      }
+    }
   }
 }
