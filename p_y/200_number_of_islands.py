@@ -61,3 +61,36 @@ class Solution:
         return uf.count
 
 
+# Take 2: DFS:
+class Solution:
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        row = len(grid)
+        if row == 0:
+            return 0
+        col = len(grid[0])
+        result = 0
+        visited = [[False for _ in range(col)] for _ in range(row)]
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == '1' and not visited[i][j]:
+                    visited[i][j] = True
+                    result += 1
+                    self.count(grid, i, j, visited)
+
+        return result
+
+    def count(self, grid, i, j, visited):
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        row = len(grid)
+        col = len(grid[0])
+        for dx, dy in directions:
+            x = i + dx
+            y = j + dy
+            if x >= 0 and x < row and y >= 0 and y < col and grid[i][j] == '1' and not visited[x][y]:
+                visited[x][y] = True
+                self.count(grid, x, y, visited)
+
