@@ -32,3 +32,28 @@ class Solution:
 
         return most_frequent_word
 
+
+# take 2:
+class Solution:
+    def mostCommonWord(self, paragraph, banned):
+        """
+        :type paragraph: str
+        :type banned: List[str]
+        :rtype: str
+        """
+        banned = set(banned)
+        paragraph = re.split("[\s!?',;.]+", paragraph.lower())
+        
+        m = collections.defaultdict(int)
+        for word in paragraph:
+            if word != "" and word not in banned:
+                m[word] += 1
+        #print(m)
+        max_freq = 0
+        ans = ""
+        for k, v in m.items():
+            if v > max_freq:
+                ans = k
+                max_freq = v
+        return ans
+        
