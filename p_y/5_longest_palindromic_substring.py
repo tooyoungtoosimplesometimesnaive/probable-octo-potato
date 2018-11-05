@@ -49,3 +49,73 @@ class Solution:
 #         return res;
 #     }
 # }
+
+
+
+# Take 2:
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s) == 0:
+            return ""
+        dp = [[False for _ in range(len(s))] for _ in range(len(s))]
+        # dp[i][i] = True
+        # dp[i][j] = True only if s[i] == s[j] and dp[i + 1][j - 1] = True
+        # dp[i][i + 1] = True only if s[i] == s[i + 1]
+        max_len = 0
+        i = len(s) - 1
+        start = 0
+        end = 0
+        while i >= 0:
+            dp[i][i] = True
+            j = i + 1
+            while j <= len(s) - 1:
+                if j == i + 1:
+                    dp[i][j] = s[i] == s[j]
+                else:
+                    dp[i][j] = dp[i + 1][j - 1] and s[i] == s[j]
+
+                if dp[i][j] and j - i + 1>= max_len:
+                    max_len = j - i + 1
+                    start = i
+                    end = j
+                j += 1
+            i -= 1
+        return s[start:end + 1]
+
+
+# Take 3:
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        def expand(s, i, j):
+            # return the longest parlindrome string length
+            left = i
+            right = j
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return right - left - 1
+
+        if len(s) == 0:
+            return ""
+        start = 0
+        end = 0
+        max_len = 0
+        for i in range(len(s)):
+            len_1 = expand(s, i, i)
+            len_2 = expand(s, i, i + 1)
+            l = max(len_1, len_2)
+            if l > max_len:
+                max_len = l
+                # This is very important
+                start = i - (l - 1) // 2
+                end = i + l // 2
+        return s[start:end + 1]
+
