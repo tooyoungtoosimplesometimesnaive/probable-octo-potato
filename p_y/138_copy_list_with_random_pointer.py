@@ -81,3 +81,41 @@ class Solution(object):
 
         return copied_dict[original_head]
 
+
+# Take 2:
+# Definition for singly-linked list with a random pointer.
+# class RandomListNode(object):
+#     def __init__(self, x):
+#         self.label = x
+#         self.next = None
+#         self.random = None
+
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: RandomListNode
+        :rtype: RandomListNode
+        """
+        
+        node_map = {}
+        new_head = RandomListNode(-1)
+        p = new_head
+        while head:
+            new_node = node_map[head] if head in node_map else RandomListNode(head.label)
+            if head not in node_map:
+                node_map[head] = new_node
+
+            p.next = new_node
+            if head.random:
+                if head.random not in node_map:
+                    new_random = RandomListNode(head.random.label)
+                    node_map[head.random] = new_random
+                    new_node.random = new_random
+                else:
+                    node = node_map[head.random]
+                    new_node.random = node
+
+            p = p.next
+            head = head.next
+        return new_head.next
+
