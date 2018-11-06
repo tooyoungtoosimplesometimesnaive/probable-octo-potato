@@ -59,3 +59,55 @@ class Solution:
         else:
             return False
 
+
+# Take 2:
+class Solution:
+    def nextClosestTime(self, time):
+        """
+        :type time: str
+        :rtype: str
+        """
+        if time == "00:00":
+            return time
+
+        result = []
+        time = time[0:2] + time[3:]
+        self.get_all(time, 0, "", result)
+        #print(result)
+        min_diff = float('inf')
+        closest_time = time
+        time_num = self.to_time(time)
+        for r in result:
+            if r == time:
+                continue
+            if self.calc_diff(self.to_time(r), time_num) < min_diff:
+                min_diff = self.calc_diff(self.to_time(r), time_num)
+                closest_time = r
+
+        return closest_time[:2] + ":" + closest_time[2:]
+
+    def get_all(self, time, i, current, result):
+        if i == 4:
+            result.append(current)
+            return
+
+        for a in time:
+            c = current + a
+            if len(c) == 2 and int(c) > 23:
+                continue
+            if len(c) == 4 and int(c[2:]) > 59:
+                continue
+            self.get_all(time, i + 1, c, result)
+
+    def to_time(self, time):
+        return int(time[0:2]) * 60 + int(time[2:])
+
+    def calc_diff(self, time_1, time_2):
+        # calc time_1 - time_2:
+        # always assume time_1 is later than time_2
+        # (so that the answer should always be positive)
+        if time_1 > time_2:
+            return time_1 - time_2
+        else:
+            return 24 * 60 + time_1 - time_2
+
