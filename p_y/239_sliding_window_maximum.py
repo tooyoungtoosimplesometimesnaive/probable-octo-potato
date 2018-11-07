@@ -23,3 +23,28 @@ class Solution:
         return res
         
 
+# Take 2
+class Solution:
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        if len(nums) == 0:
+            return []
+        pool = []
+        for i in range(k):
+            heapq.heappush(pool, (-nums[i], i))
+        result = [-pool[0][0]]
+        i = k
+        while i < len(nums):
+            while len(pool) > 0 and i - k + 1 > pool[0][1]:
+                heapq.heappop(pool)
+            heapq.heappush(pool, (-nums[i], i))
+
+            result.append(-pool[0][0])
+            i += 1
+
+        return result
+
