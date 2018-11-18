@@ -9,6 +9,7 @@ import java.util.*;
 
 import org.junit.Assert;
 import org.junit.Test;
+import pq.CanoePaddle;
 
 public class LibraryTest {
 
@@ -64,5 +65,17 @@ public class LibraryTest {
       DFSParadigms.allPermutation(Arrays.asList(1,2,3), 0);
       System.out.println("---");
       DFSParadigms.allPermutation_2(Arrays.asList(1,2,3), new ArrayList<>(), new HashSet<>());
+    }
+
+    @Test
+    public void canoeTest() {
+        CanoePaddle cp = new CanoePaddle();
+        int[][] heightMap = {
+                {0, 9, 9, 9, 9},
+                {1, 9, 9, 9, 9},
+                {2, 9, 2, 3, 2},
+                {2, 3, 4, 9, 3},
+                {1, 9, 9, 9, 1}};
+        System.out.println(cp.minDays(heightMap));
     }
 }
