@@ -16,3 +16,27 @@ class Solution:
             result = max(result, M[i])
         return result
 
+
+# Take 2, use binary search.
+from bisect import bisect_left
+class Solution:
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if nums == None or len(nums) == 0:
+            return 0
+        LIS = []
+        result = 1
+        for i in range(len(nums)):
+            index = bisect_left(LIS, nums[i])
+            # print(index)
+            # print(LIS)
+            if index >= len(LIS):
+                LIS.append(nums[i])
+            else:
+                LIS[index] = nums[i]
+
+            result = max(result, len(LIS))
+        return result
