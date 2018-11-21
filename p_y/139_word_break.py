@@ -26,3 +26,29 @@ class Solution:
             
         return can_break[-1]
 
+# Take 2:
+class Solution:
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        if s == None:
+            return False
+        if len(s) == 0:
+            return True
+
+        word_dict = set(wordDict)
+        can_break = [False] * (len(s) + 1)
+        can_break[0] = True
+
+        for i in range(len(s) + 1):
+            if s[:i] in word_dict:
+                can_break[i] = True
+            for j in range(i):
+                if can_break[j] and s[j:i] in word_dict:
+                    can_break[i] = True
+        #print(can_break)
+        return can_break[-1]
+
