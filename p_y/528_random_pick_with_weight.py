@@ -32,3 +32,37 @@ class Solution:
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(w)
 # param_1 = obj.pickIndex()
+
+
+# Take 2:
+class Solution:
+
+    def __init__(self, w):
+        """
+        :type w: List[int]
+        """
+        self.a_weights = [w[0]]
+        for k in w[1:]:
+            self.a_weights.append(self.a_weights[-1] + k)
+        print(self.a_weights)
+
+    def pickIndex(self):
+        """
+        :rtype: int
+        """
+        i = random.randrange(self.a_weights[-1]) + 1
+        left = 0
+        right = len(self.a_weights) - 1
+
+        while left < right:
+            mid = (left + right) // 2
+            if self.a_weights[mid] == i:
+                return mid
+            elif self.a_weights[mid] < i:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+
+
+
