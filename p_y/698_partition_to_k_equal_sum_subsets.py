@@ -59,3 +59,41 @@ class Solution:
                     return True
                 visited[i] = False
         return False
+
+
+# Take 3:
+class Solution(object):
+    def canPartitionKSubsets(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        if sum(nums) % k != 0:
+            return False
+        target = sum(nums) // k
+        visited = [False for _ in range(len(nums))]
+
+        return self.can_partition(nums, target, k, visited, 0, 0)
+
+
+    def can_partition(self, nums, target, k, visited, current_sum, start_index):
+
+        if k == 0:
+            return True
+        if current_sum == target:
+            return self.can_partition(nums, target, k - 1, visited, 0, 0)
+
+        i = start_index
+        while i < len(nums):
+            if not visited[i]:
+                if current_sum + nums[i] > target:
+                    i += 1
+                    continue
+                visited[i] = True
+                if self.can_partition(nums, target, k, visited, current_sum + nums[i], i + 1):
+                    return True
+                visited[i] = False
+            i += 1
+        return False
+
