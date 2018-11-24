@@ -57,3 +57,34 @@ class Solution:
         return self.is_valid(root.left, min_value, root.val) and self.is_valid(root.right, root.val, max_value)
 
   
+
+# Take 2:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def __init__(self):
+        self.prev = None
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root == None:
+            return True
+
+        is_left_valid = self.isValidBST(root.left)
+
+        if self.prev != None:
+            if self.prev >= root.val:
+                return False
+
+        self.prev = root.val
+        is_right_valid = self.isValidBST(root.right)
+
+        return is_left_valid and is_right_valid
+

@@ -60,11 +60,15 @@ public class LibraryTest {
 
     @Test
     public void allSubsets() {
-//        DFSParadigms.allSubsets_1(Arrays.asList(1,2,3,4), new ArrayList<Integer>(), 0);
-//        DFSParadigms.allSubsets_2(Arrays.asList(1,2,3,4), new ArrayList<Integer>(), 0);
-      DFSParadigms.allPermutation(Arrays.asList(1,2,3), 0);
-      System.out.println("---");
-      DFSParadigms.allPermutation_2(Arrays.asList(1,2,3), new ArrayList<>(), new HashSet<>());
+        DFSParadigms.allSubsets_1(Arrays.asList(1,2,3,4), new ArrayList<Integer>(), 0);
+        DFSParadigms.allSubsets_2(Arrays.asList(1,2,3,4), new ArrayList<Integer>(), 0);
+    }
+
+    @Test
+    public void allPermutations() {
+        DFSParadigms.allPermutation_withDuplicates(Arrays.asList(1,3,3), 0);
+//        DFSParadigms.allPermutation_2(Arrays.asList(1,2,3), new ArrayList<>(), new HashSet<>());
+//        DFSParadigms.allPermutation(Arrays.asList(1,2,3), 0);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package common;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +28,22 @@ public class DFSParadigms {
       // This k + 1 is very important.
       allSubsets_2(input, current, k + 1);
       current.remove(current.size() - 1);
+    }
+  }
+
+  public static void allPermutation_withDuplicates(List<Integer> input, int i) {
+    if (i == input.size()) {
+      System.out.println(input);
+      return;
+    }
+    HashSet<Integer> set = new HashSet<>();
+    for (int j = i; j < input.size(); j++) {
+      if (!set.contains(input.get(j))) {
+        set.add(input.get(j));
+        swap(input, j, i);
+        allPermutation_withDuplicates(input, i + 1);
+        swap(input, j, i);
+      }
     }
   }
 
