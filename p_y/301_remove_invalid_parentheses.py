@@ -72,3 +72,51 @@ class Solution:
                         q.append(next_str)
         
         return list(result)
+
+# Take 2:
+class Solution:
+    def removeInvalidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        left_unmatch, right_unmatch = self.calc_unmatched_parentheses(s)
+        # print(left_unmatch, right_unmatch)
+        result = set()
+        self.dfs(s, 0, "", result, left_unmatch, right_unmatch)
+        return list(result)
+
+    def calc_unmatched_parentheses(self, s):
+        left, right = 0, 0
+        for c in s:
+            if c == '(':
+                left += 1
+            elif c == ')':
+                if left > 0:
+                    left -= 1
+                else:
+                    right += 1
+        return (left, right)
+
+    def is_valid(self, s):
+        left, right = self.calc_unmatched_parentheses(s)
+        return left == 0 and right == 0
+
+    def dfs(self, s, i, current, result, left_unmatch, right_unmatch):
+        #print(current, i)
+        if i == len(s):
+            if left_unmatch == 0 and right_unmatch == 0 and self.is_valid(current):
+                # print("hhhhh")
+                # print(s)
+                result.add(current)
+            return
+
+        if s[i] != '(' and s[i] != ')':
+            self.dfs(s, i + 1, current + s[i], result, left_unmatch, right_unmatch)
+        else:
+            self.dfs(s, i + 1, current + s[i], result, left_unmatch, right_unmatch)
+            if s[i] == '(' and left_unmatch > 0:
+                self.dfs(s, i + 1, current, result, left_unmatch - 1, right_unmatch)
+            elif s[i] == ')' and right_unmatch > 0:
+                self.dfs(s, i + 1, current, result, left_unmatch, right_unmatch - 1)
+
