@@ -119,3 +119,43 @@ class Solution(object):
                 end = i + l // 2
         return s[start:end + 1]
 
+
+# Take 4: DP solution
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+
+        """
+        dp[i][j] = s[i,j] is palindrome
+        dp[i][j] = s[i] == s[j] and dp[i + 1][j - 1]
+
+        base case: dp[i][i] = true
+                dp[i][i + 1] = s[i] == s[i + 1]
+        """
+        max_len = 1
+        start = 0
+        end = 0
+
+        dp = [[False for _ in range(len(s))] for _ in range(len(s))]
+        for i in range(len(s)):
+            dp[i][i] = True
+        for i in range(len(s) - 1):
+            dp[i][i + 1] = s[i] == s[i + 1]
+            if dp[i][i + 1] and 2 > max_len:
+                start = i
+                end = i + 1
+
+
+        for i in range(len(s) - 2, -1, -1):
+            for j in range(i + 2, len(s)):
+                dp[i][j] = s[i] == s[j] and dp[i + 1][j - 1]
+                if dp[i][j] and j - i + 1 > max_len:
+                    max_len = j - i + 1
+                    start = i
+                    end = j
+
+        return s[start:end + 1]
+

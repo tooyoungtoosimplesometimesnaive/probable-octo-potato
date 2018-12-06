@@ -43,3 +43,37 @@ class Solution:
 #         return dp[0][s.length()-1];
 #     }
 # }
+
+
+
+# Take 2: DP solution:
+class Solution:
+    def longestPalindromeSubseq(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        """
+        dp[i][j] : longest palindrome subseq from s[i] to s[j]
+        dp[i][j] =
+            if s[i] == s[j]:
+                dp[i + 1][j - 1] + 2
+            else:
+                max(dp[i + 1][j], dp[i][j - 1])
+        """
+        if s == s[::-1]: return len(s)
+
+        dp = [[1 for _ in range(len(s))] for _ in range(len(s))]
+
+        for i in range(len(s) - 1):
+            dp[i][i + 1] = 2 if s[i] == s[i + 1] else 1
+
+        for i in range(len(s) - 2, -1, -1):
+            for j in range(i + 2, len(s)):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i + 1][j - 1] + 2
+                else:
+                    dp[i][j] = max(dp[i][j], dp[i + 1][j], dp[i][j - 1])
+
+        return dp[0][len(s) - 1]
+
