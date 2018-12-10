@@ -94,3 +94,43 @@ class Solution:
                 visited[x][y] = True
                 self.count(grid, x, y, visited)
 
+
+# Take 3 DFS:
+class Solution:
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        self.row = len(grid)
+        if self.row < 1:
+            return 0
+        self.col = len(grid[0])
+        visited = [[False for _ in range(self.col)] for _ in range(self.row)]
+        count = 0
+        for i in range(self.row):
+            for j in range(self.col):
+                if not visited[i][j] and grid[i][j] == '1':
+                    self.dfs(grid, visited, i, j)
+                    count += 1
+        return count
+
+    def dfs(self, grid, visited, i, j):
+        queue = [(i, j)]
+        visited[i][j] = True
+
+        while len(queue) > 0:
+            x, y = queue.pop(0)
+            if x + 1 < self.row and grid[x + 1][y] == '1' and not visited[x + 1][y]:
+                visited[x + 1][y] = True
+                self.dfs(grid, visited, x + 1, y)
+            if x - 1 >= 0 and grid[x - 1][y] == '1' and not visited[x - 1][y]:
+                visited[x - 1][y] = True
+                self.dfs(grid, visited, x - 1, y)
+            if y + 1 < self.col and grid[x][y + 1] == '1' and not visited[x][y + 1]:
+                visited[x][y + 1] = True
+                self.dfs(grid, visited, x, y + 1)
+            if y - 1 >= 0 and grid[x][y - 1] == '1' and not visited[x][y - 1]:
+                visited[x][y - 1] = True
+                self.dfs(grid, visited, x, y - 1)
+
