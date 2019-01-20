@@ -1,5 +1,9 @@
+import com.sun.tools.javac.util.Assert;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ShortestPathWithBreakings {
     static class Step {
@@ -9,6 +13,10 @@ public class ShortestPathWithBreakings {
             this.coordinate = coordinate;
             this.breakings = breakings;
         }
+        @Override
+        public String toString() {
+            return "[" + coordinate[0] + "," + coordinate[1] + "]," + breakings;
+        }
     }
 
     private int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
@@ -17,21 +25,36 @@ public class ShortestPathWithBreakings {
         int col = maze[0].length;
         Deque<Step> queue = new ArrayDeque<>();
         queue.offer(new Step(start, 1));
-        maze[start[0]][start[1]] = 'X';
+
+        Set<String> visited = new HashSet<>();
         int result = 0;
         while (!queue.isEmpty()) {
-            for (int i = 0; i < queue.size(); i++) {
+            int s = queue.size();
+            for (int i = 0; i < s; i++) {
                 Step top = queue.poll();
-                if (maze[top.coordinate[0]][top.coordinate[1]] == 'e') {
+//                System.out.println(top.coordinate[0] + ", " + top.coordinate[1] + ", break=" + top.breakings +", path=" + result);
+                if (top.coordinate[0] == end[0] && top.coordinate[1] == end[1]) {
                     return result;
                 }
+
+                visited.add(top.toString());
+
                 for (int[] d : directions) {
                     int x = top.coordinate[0] + d[0], y = top.coordinate[1] + d[1];
-                    if (x >= 0 && x < row && y >= 0 && y <= col) {
+                    if (x >= 0 && x < row && y >= 0 && y < col) {
+                        if (x == start[0] && y == start[1]) {
+                            continue;
+                        }
                         if (maze[x][y] == 'X' && top.breakings > 0) {
-                            queue.offer(new Step(new int[]{x, y}, top.breakings - 1));
-                        } else {
-                            queue.offer(new Step(new int[]{x, y}, top.breakings));
+                            Step nextStep = new Step(new int[]{x, y}, top.breakings - 1);
+                            if (!visited.contains(nextStep.toString())) {
+                                queue.offer(nextStep);
+                            }
+                        } else if (maze[x][y] == 'O' || maze[x][y] == 'e') {
+                            Step nextStep = new Step(new int[]{x, y}, top.breakings);
+                            if (!visited.contains(nextStep.toString())) {
+                                queue.offer(nextStep);
+                            }
                         }
                     }
                 }
@@ -55,7 +78,14 @@ public class ShortestPathWithBreakings {
                 {'O', 'X', 'X', 'O', 'X'},
                 {'s', 'X', 'O', 'O', 'e'},
         };
-        System.out.println(a.shortestPathWithOneBreaking(input, new int[]{3, 0}, new int[]{3, 4}));
-        System.out.println(a.shortestPathWithOneBreaking(input2, new int[]{3, 0}, new int[]{3, 4}));
+        char[][] input3 = {
+                {'O', 'O', 'O', 'O', 'O'},
+                {'O', 'O', 'X', 'O', 'X'},
+                {'O', 'X', 'X', 'X', 'X'},
+                {'s', 'X', 'O', 'X', 'e'},
+        };
+        Assert.check(a.shortestPathWithOneBreaking(input, new int[]{3, 0}, new int[]{3, 4}) == 10);
+        Assert.check(a.shortestPathWithOneBreaking(input2, new int[]{3, 0}, new int[]{3, 4}) == 4);
+        Assert.check(a.shortestPathWithOneBreaking(input3, new int[]{3, 0}, new int[]{3, 4}) == -1);
     }
 }
