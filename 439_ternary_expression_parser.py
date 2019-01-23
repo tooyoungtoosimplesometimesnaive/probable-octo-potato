@@ -37,3 +37,47 @@ class Solution(object):
         else:
             return TreeNode(value, None, None)
 
+# take 2:
+class TreeNode:
+    def __init__(self, val):
+        self.left = None
+        self.right = None
+        self.val = val
+
+class Solution:
+    def __init__(self):
+        self.p = 0
+
+    def parseTernary(self, expression):
+        """
+        :type expression: str
+        :rtype: str
+        """
+
+        t = self.tree(expression)
+        #print(t.val, t.left.val, t.right.val)
+        return self.walk(t)
+
+    def tree(self, expression):
+        if expression == None or len(expression) == 0 or self.p >= len(expression):
+            return None
+        root = TreeNode(expression[self.p])
+        self.p += 1
+
+        if self.p < len(expression) and expression[self.p] == ':':
+            self.p += 1
+            return root
+        self.p += 1
+        root.left = self.tree(expression)
+        root.right = self.tree(expression)
+
+        return root
+
+    def walk(self, t):
+        if t.left == None and t.right == None:
+            return t.val
+        elif t.val == 'F':
+            return self.walk(t.right)
+        else:
+            return self.walk(t.left)
+

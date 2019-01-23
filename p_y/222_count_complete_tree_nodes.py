@@ -68,3 +68,34 @@ class Solution:
         else:
             return self.countNodes(root.right) + 1 + 2 ** h_left - 1
 
+
+
+# Take 2:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root == None:
+            return 0
+        left_h = self.h(root.left)
+        right_h = self.h(root.right)
+
+        if left_h <= right_h:
+            return self.countNodes(root.right) + 2 ** left_h
+        else:
+            return self.countNodes(root.left) + 2 ** right_h
+
+
+    def h(self, root):
+        if root == None:
+            return 0
+        return self.h(root.left) + 1
